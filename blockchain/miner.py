@@ -7,7 +7,7 @@ from uuid import uuid4
 
 from timeit import default_timer as timer
 
-import random
+import random,json
 
 
 def proof_of_work(last_proof):
@@ -23,24 +23,18 @@ def proof_of_work(last_proof):
 
     start = timer()
 
-    print("Searching for next proof")
-    proof = 0
+    print("Searching for next proof ", last_proof)
     #  TODO: Your code here
+    proof = 0
+    hash1  = hashlib.sha256(str(last_proof).encode()).hexdigest()
+    while True:
+        hash2 = hashlib.sha256(str(proof).encode()).hexdigest()
+        if hash1[len(hash1)-6:] == hash2[0:6]:
+            print("Proof found: " + str(proof) + " in " + str(timer() - start), hash1[len(hash1)-6:], hash2[0:6])
+            return proof
+        proof += 1
 
-    print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
-
-
-def valid_proof(last_hash, proof):
-    """
-    Validates the Proof:  Multi-ouroborus:  Do the last six characters of
-    the hash of the last proof match the first six characters of the proof?
-
-    IE:  last_hash: ...AE9123456, new hash 123456888...
-    """
-
-    # TODO: Your code here!
-    pass
 
 
 if __name__ == '__main__':
@@ -66,6 +60,7 @@ if __name__ == '__main__':
         # Get the last proof from the server
         r = requests.get(url=node + "/last_proof")
         data = r.json()
+        print ("Data ", data)
         new_proof = proof_of_work(data.get('proof'))
 
         post_data = {"proof": new_proof,
@@ -73,8 +68,9 @@ if __name__ == '__main__':
 
         r = requests.post(url=node + "/mine", json=post_data)
         data = r.json()
+        print("Data : ", data.get('message'))
         if data.get('message') == 'New Block Forged':
             coins_mined += 1
             print("Total coins mined: " + str(coins_mined))
         else:
-            print(data.get('message'))
+            print("Message > ", data)

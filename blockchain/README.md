@@ -13,8 +13,11 @@ Multi-Ouroboros of Work Algorithm
     - p is the previous proof, and p' is the new proof
 
 Some things to keep in mind:
-* With everyone mining at once, it may take a long time to actually mine a coin on the main server. _You will lose the contest most of the time!_
-* There is a test server that you can test your code on:  lambda-coin-test-1.   As before, you can change the server that the miner uses by including it in the command to run the miner:  `python3 miner.py https://lambda-coin-test-1.herokuapp.com/api`
+* With everyone mining at once, it may take a long time to actually mine a coin on the main server.
+ _You will lose the contest most of the time!_
+* There is a test server that you can test your code on:  lambda-coin-test-1
+.   As before, you can change the server that the miner uses by including it in 
+the command to run the miner:  `python3 miner.py https://lambda-coin-test-1.herokuapp.com/api`
 ** Please only mine against the test server to test your code - stop mining when the test is over
 * The main server, and the competition, is the default and will run with `python3 miner.py`
 * Please change your name in `my_id.txt` to something recognizable
@@ -22,4 +25,5 @@ Some things to keep in mind:
 
 Some Strategy Suggestions:
 * Don't forget to install dependencies with `pipenv install` and run them inside `pipenv shell`
-* _Think about what will happen if your strategy is the same as the example from class.  If you start at 0 and count upward, and someone else does the same thing, but they start earlier or have a faster computer, what will happen?_
+* _Think about what will happen if your strategy is the same as the example from class.
+  If you start at 0 and count upward, and someone else does the same thing, but they start earlier or have a faster computer, what will happen?_
